@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BestCreative Admin — 运营后台</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ops-app">
+    <aside class="icon-rail" aria-label="产品导航">
+      <div class="brand-mark">BC</div>
+      <button class="rail-item active" title="运营后台">▦</button>
+      <div class="rail-spacer"></div>
+      <button class="rail-item" title="帮助">?</button>
+      <div class="rail-avatar">OP</div>
+    </aside>
+
+    <aside class="side-nav">
+      <div class="side-title">
+        <strong>BestCreative Admin</strong>
+        <span>运营概览 · 客户 · 变更</span>
+      </div>
+      <div class="nav-label">运营管理</div>
+      <button class="nav-link active" data-page="overview"><span class="nav-icon">⌂</span>运营概览</button>
+      <button class="nav-link" data-page="customers"><span class="nav-icon">▤</span>客户管理</button>
+      <button class="nav-link" data-page="logs"><span class="nav-icon">↺</span>变更记录</button>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div class="topbar-title" id="topbarTitle">运营概览</div>
+        <div class="topbar-actions">
+          <span class="operator"><i>O</i> ops.admin@bestfulfill.com</span>
+        </div>
+      </header>
+
+      <main>
+        <!-- 运营概览 -->
+        <section class="page active" id="page-overview">
+          <div class="page-head">
+            <div>
+              <h1>运营概览</h1>
+            </div>
+            <div class="date-range-picker" id="dateRangePicker">
+              <button type="button" class="date-range-trigger" id="dateRangeTrigger" aria-haspopup="true" aria-expanded="false">
+                <span class="date-range-trigger-icon">◷</span>
+                <span class="date-range-trigger-copy">
+                  <span class="date-range-trigger-label" id="dateRangeLabel">最近 7 天</span>
+                  <span class="date-range-trigger-sub" id="dateRangeSub"></span>
+                </span>
+              </button>
+              <div class="date-range-menu" id="dateRangeMenu">
+                <button type="button" class="date-range-option active" data-preset="7">最近 7 天</button>
+                <button type="button" class="date-range-option" data-preset="15">最近 15 天</button>
+                <button type="button" class="date-range-option" data-preset="30">最近 30 天</button>
+                <button type="button" class="date-range-option" data-preset="90">最近 90 天</button>
+                <div class="date-range-divider"></div>
+                <div class="date-range-custom">
+                  <div class="date-range-custom-title">自定义范围</div>
+                  <div class="date-range-custom-fields">
+                    <label class="date-range-field"><span>开始</span><input type="date" id="customStart" /></label>
+                    <label class="date-range-field"><span>结束</span><input type="date" id="customEnd" /></label>
+                  </div>
+                  <button type="button" class="primary-btn date-range-apply" id="applyCustomRange">应用</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-block-head">
+              <h2>官网漏斗</h2>
+            </div>
+            <div class="funnel-grid" id="funnelGrid"></div>
+            <div class="funnel-rate-row" id="funnelRates"></div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-block-head">
+              <h2>活跃与消耗</h2>
+            </div>
+            <div class="metric-row" id="metricRow"></div>
+          </div>
+
+          <section class="overview-panel usage-panel">
+            <div id="dailyCreditsChart"></div>
+          </section>
+
+          <section class="overview-panel usage-panel">
+            <div id="taskTypeChart"></div>
+          </section>
+
+          <section class="overview-panel usage-panel">
+            <div id="dauChart"></div>
+          </section>
+        </section>
+
+        <!-- 客户管理 -->
+        <section class="page" id="page-customers">
+          <div class="page-head">
+            <div>
+              <h1>客户管理</h1>
+            </div>
+            <button class="primary-btn" id="openAddCustomer">＋ 新增客户</button>
+          </div>
+
+          <section class="panel">
+            <div class="filterbar">
+              <div class="customer-total"><label>客户总数</label><strong id="customerTotalCount">0</strong></div>
+              <label class="search-box"><span>⌕</span><input id="customerSearch" placeholder="搜索客户 ID、名称、邮箱或来源" /></label>
+              <select class="filter-select" id="customerStatusFilter">
+                <option value="all">全部状态</option>
+                <option value="active">启用</option>
+                <option value="disabled">停用</option>
+              </select>
+              <select class="filter-select" id="customerSourceFilter">
+                <option value="all">全部来源</option>
+                <option value="Google">Google</option>
+                <option value="Social">Social</option>
+                <option value="Direct">Direct</option>
+                <option value="Referral">Referral</option>
+                <option value="运营开通">运营开通</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="filter-spacer"></div>
+            </div>
+            <div class="data-wrap" id="customerTable"></div>
+            <div class="pagination" id="customerPagination"></div>
+          </section>
+        </section>
+
+        <!-- 变更记录 -->
+        <section class="page" id="page-logs">
+          <div class="page-head">
+            <div>
+              <h1>变更记录</h1>
+            </div>
+          </div>
+          <div class="log-toolbar">
+            <label class="search-box"><span>⌕</span><input id="logSearch" placeholder="搜索客户、修改项或操作人" /></label>
+          </div>
+          <section class="panel">
+            <div class="data-wrap" id="globalLogTable"></div>
+            <div class="pagination"><span id="globalLogCount"></span><span>按时间倒序</span></div>
+          </section>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <!-- 客户详情抽屉 -->
+  <div class="drawer-mask" id="customerDrawerMask">
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <div class="drawer-head">
+        <div>
+          <h2 id="drawerTitle">客户详情</h2>
+          <p id="drawerSubtitle"></p>
+        </div>
+        <button class="icon-close" id="closeDrawer" aria-label="关闭">×</button>
+      </div>
+      <div class="customer-strip" id="customerStrip"></div>
+      <div class="customer-note" id="customerNote"></div>
+      <div class="drawer-tabs">
+        <button class="drawer-tab active" data-tab="behavior">操作行为</button>
+        <button class="drawer-tab" data-tab="tasks">任务</button>
+        <button class="drawer-tab" data-tab="credits">积分变动</button>
+        <button class="drawer-tab" data-tab="history">变更记录</button>
+      </div>
+      <div class="drawer-body" id="drawerBody"></div>
+      <div class="drawer-footer" id="drawerFooter"></div>
+    </aside>
+  </div>
+
+  <!-- 新增客户 -->
+  <div class="modal-mask" id="addCustomerMask">
+    <section class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h2>新增客户</h2>
+        <button class="icon-close" id="closeAddCustomer">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="two-cols">
+          <div class="modal-field"><label>商户名称 <em>*</em></label><input id="addName" placeholder="例如 Northstar Studio" /></div>
+          <div class="modal-field"><label>登录邮箱 <em>*</em></label><input id="addEmail" type="email" placeholder="name@company.com" /></div>
+        </div>
+        <div class="modal-field"><label>客户网站</label><input id="addWebsite" placeholder="例如 northstar.io" /></div>
+        <div class="two-cols">
+          <div class="modal-field"><label>初始 Credit <em>*</em></label><input id="addCredits" type="number" min="0" value="200" /></div>
+          <div class="modal-field">
+            <label>来源</label>
+            <input id="addSource" placeholder="例如 运营开通 / Google" value="运营开通" />
+          </div>
+        </div>
+        <div class="modal-field"><label>备注</label><textarea id="addNote" placeholder="选填"></textarea></div>
+      </div>
+      <div class="modal-footer">
+        <button class="secondary-btn" id="cancelAddCustomer">取消</button>
+        <button class="primary-btn" id="confirmAddCustomer">创建</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 调整 Credit -->
+  <div class="modal-mask" id="adjustCreditMask">
+    <section class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h2 id="adjustTitle">调整 Credit</h2>
+        <button class="icon-close" id="closeAdjustCredit">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-label">当前积分</div>
+          <div id="adjustCurrent" style="font-weight:650"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">调整后 <em style="color:#dc2626">*</em></div>
+          <div class="field"><input id="adjustNext" type="number" min="0" /></div>
+        </div>
+        <div class="form-row align-top">
+          <div class="form-label">修改原因</div>
+          <div class="field">
+            <textarea id="adjustReason" maxlength="200" placeholder="选填，例如套餐升级、商务审批"></textarea>
+            <div class="field-help">选填，最多 200 字；填写后同步写入变更记录与积分变动。</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="secondary-btn" id="cancelAdjustCredit">取消</button>
+        <button class="primary-btn" id="confirmAdjustCredit">保存</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 停用客户二次确认 -->
+  <div class="modal-mask" id="disableConfirmMask">
+    <section class="modal modal-sm" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h2 id="disableConfirmTitle">确认停用客户</h2>
+        <button class="icon-close" id="closeDisableConfirm">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-text" id="disableConfirmText">停用后该客户将无法登录，确定继续？</p>
+      </div>
+      <div class="modal-footer">
+        <button class="secondary-btn" id="cancelDisableConfirm">取消</button>
+        <button class="danger-btn" id="confirmDisableCustomer">确认停用</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
